@@ -1,0 +1,32 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Note } from '../foundations/Blocks';
+import { source, collections } from '../tokens/tokens';
+
+<Meta title="Introduction" />
+
+# DS Admin Panel tokens
+
+This Storybook is the code side of the Figma design system **{source.figmaFileName}**. It holds the design tokens only: every Figma variable is turned into a CSS variable, and each page here shows a group of them. Components come next, one at a time, built on these variables.
+
+| Source | |
+|---|---|
+| Figma file | <code>{source.figmaFileKey}</code> |
+| Exported | {source.exportedAt} |
+| Collections | {collections.length} ({collections.map((c) => c.name).join(', ')}) |
+| Variables | {collections.reduce((n, c) => n + c.tokens.length, 0)} |
+| Not exported | {source.skipped.join('; ')} |
+
+## How a token gets from Figma to code
+
+1. `scripts/export-figma-variables.js` runs inside the Figma file and writes every local variable, its modes and its aliases to `tokens/figma-variables.json`.
+2. `npm run tokens` turns that file into `src/tokens/tokens.css` (CSS variables) and `src/tokens/tokens.ts` (the same data for TypeScript).
+3. `npm run check:tokens` loads the CSS in a browser and confirms every variable, in every mode, resolves to the value Figma has.
+4. These pages read `tokens.ts` and render with the CSS variables, so a page is wrong only if the tokens are wrong.
+
+The JSON file is the snapshot of record. Change a value in Figma, export again, rebuild. Don't edit the generated files.
+
+<Note title="Font.">Suisse Int'l is a licensed font and isn't included. Pages fall back to Helvetica Neue or the system sans-serif until the font files are added to the project.</Note>
+
+<Note title="Open items carried over from the Figma audit (10 Oct 2026)." kind="info">
+Stroke/Positive (2.8:1) and Stroke/Caution (2.4:1) are below 3:1 on white, and Icon/Tertiary Inverse is 2.4:1 on dark; see Colors / Semantic. Size [Table] descriptions in Figma don't match its values; see Component tokens. Body text uses two line heights (14/20 and 14/24); see Typography.
+</Note>

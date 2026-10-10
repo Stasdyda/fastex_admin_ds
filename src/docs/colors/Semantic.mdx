@@ -1,0 +1,27 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { SemanticTable, Note } from '../../foundations/Blocks';
+
+<Meta title="Colors/Semantic" />
+
+# Semantic colours
+
+The Figma **Tokens** collection, grouped by job. Contrast follows WCAG 2.2: 4.5:1 for text, 3:1 for icons, borders that identify a control, and chart series. Text and icons are measured on Background/White, and inverse tokens on Background/Primary Inverse. A token marked Exempt is below the minimum and may only be used for the job named in its tooltip.
+
+<Note title="Below the minimum.">Stroke/Positive (Green/500, 2.8:1) and Stroke/Caution (Orange/500, 2.4:1) are fine for decorative borders but not for a border that is the only sign of a state. Green/600 (3.9:1) and Orange/600 (3.5:1) would pass. Icon/Tertiary Inverse (Gray/600, 2.4:1 on dark) would pass as Gray/500 (3.9:1). These are Figma decisions; nothing here overrides them.</Note>
+
+## Text
+<SemanticTable group="Text" />
+
+## Icon
+<SemanticTable group="Icon" />
+
+## Stroke
+<SemanticTable group="Stroke" />
+
+## Background
+<SemanticTable group="Background" />
+
+## Chart
+Series colours, used in this order: Blue, Teal, Violet, Indigo, Purple, Orange, Red.
+
+<SemanticTable group="Chart" />

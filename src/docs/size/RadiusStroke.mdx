@@ -1,0 +1,16 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { ScaleTable, RadiusBox, StrokeLine } from '../../foundations/Blocks';
+
+<Meta title="Size/Radius and stroke" />
+
+# Radius and stroke
+
+## Radius
+`xxl` (999px) makes pills and circles: any radius at or above half the shorter side renders as fully round.
+
+<ScaleTable prefix="Radius/" render={RadiusBox} />
+
+## Stroke width
+In CSS these are `--ds-stroke-width-*`, so they don't collide with the stroke colours.
+
+<ScaleTable prefix="Stroke/" render={StrokeLine} />

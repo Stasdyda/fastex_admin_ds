@@ -1,0 +1,36 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { FontFamilies, FontWeights, TypePairs, ScaleTable } from '../foundations/Blocks';
+
+<Meta title="Typography" />
+
+# Typography
+
+The Figma file has no text styles. Text in components binds size, line height, family and weight to variables one by one, so the pairs below are the ones components actually use (counted on 10 Oct 2026, legacy sets excluded).
+
+## Families
+<FontFamilies />
+
+## Weights
+<FontWeights />
+
+## Pairs in use
+
+<TypePairs pairs={[
+  { size: 8, lh: 12, use: 'Header Buttons (1 component).' },
+  { size: 10, lh: 12, use: 'Counter, Avatar initials (2).' },
+  { size: 12, lh: 16, use: 'Captions and metadata in 30 components (badge label, Detail row, Chat message, Attachment chip). Button 2xs/xs and Badge s.' },
+  { size: 14, lh: 20, use: 'Body text in 34 components. Button s/m and Input s/m.' },
+  { size: 14, lh: 24, use: 'Single-line rows in Accordion, Breadcrumbs, Control value, Sidebar item, Table text, Tab Item. Badge m. Gives a 40px row on 8px padding.', status: 'Open decision' },
+  { size: 14, lh: 32, use: 'Text button only: the line height sets the button height.', status: 'Open decision' },
+  { size: 16, lh: 24, use: 'Section titles in 7 components (Card header, Chat header, Calendar header, Filter panel, Header Title, Table empty state). Button l and Input l.' },
+  { size: 18, lh: 24, use: 'Accordion, Drawer, Popup header, Widget card (4).' },
+  { size: 20, lh: 28, use: 'Drawer, Popup header, KPI card (3).' },
+  { size: 20, lh: 32, use: 'Header Title only.', status: 'Open decision' },
+  { size: 24, lh: 32, use: 'Code cell (1).' },
+]} />
+
+## Font size tokens
+<ScaleTable prefix="Font Size/" render={(v) => <span style={{ fontSize: `var(${v})`, lineHeight: 1.2 }}>Aa</span>} />
+
+## Line height tokens
+<ScaleTable prefix="Line Height/" render={(v) => <div style={{ height: `var(${v})`, width: 64, background: 'var(--ds-background-brand-subtle)', borderTop: '1px solid var(--ds-stroke-brand)', borderBottom: '1px solid var(--ds-stroke-brand)' }} />} />

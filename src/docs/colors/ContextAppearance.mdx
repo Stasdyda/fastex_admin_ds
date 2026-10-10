@@ -1,0 +1,18 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { ContextMatrix, ModeTable } from '../../foundations/Blocks';
+
+<Meta title="Colors/Context and appearance" />
+
+# Context and appearance
+
+Two collections with modes let one component take any intent without new variants. **Context** picks the intent (brand, neutral, positive, caution, negative, info, special). **Appearance** picks the treatment: Fill uses the solid colour, Outlined and Ghost use the soft tint. Each cell below is a live element with both attributes set; the number is the text contrast on its background.
+
+<ContextMatrix />
+
+## Context
+<ModeTable name="Context" />
+
+## Appearance
+Values shown resolve through the Brand context.
+
+<ModeTable name="Appearance" />

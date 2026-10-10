@@ -1,0 +1,27 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { ComponentPreview, ModeTable, Note } from '../foundations/Blocks';
+
+<Meta title="Component tokens" />
+
+# Component tokens
+
+Five Figma collections hold sizes for specific components. Each mode is an attribute value; the previews are plain elements styled only with these variables, not the finished components.
+
+## Button · `data-button-size`
+<ComponentPreview name="Size [Button]" />
+<ModeTable name="Size [Button]" />
+
+## Input · `data-input-size`
+<ComponentPreview name="Size [Input]" />
+<ModeTable name="Size [Input]" />
+
+## Table · `data-table-density`
+<Note title="Figma descriptions don't match the values.">Row Height says "48 / 40 / 56" and Header Height says "40 / 32 / 48", but the collection has two modes, and its values are 56 / 48 (rows) and 64 / 40 (header). The code follows the values. Confirm which is intended before the Table component is built.</Note>
+<ComponentPreview name="Size [Table]" />
+<ModeTable name="Size [Table]" />
+
+## Badge · `data-badge-size` and `data-badge-shape`
+<ComponentPreview name="Size [Badge]" />
+<ModeTable name="Size [Badge]" />
+<ComponentPreview name="Shape [Badge]" />
+<ModeTable name="Shape [Badge]" />

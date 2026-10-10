@@ -1,0 +1,81 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Note } from '../foundations/Blocks';
+
+<Meta title="Using tokens" />
+
+# Using tokens
+
+Import the CSS once at the app root:
+
+```ts
+import './tokens/tokens.css';
+```
+
+Then use the semantic tokens in component styles. Use the primitive `--ds-color-*` variables only when you're defining a new semantic token.
+
+```css
+.settings-card {
+  background: var(--ds-background-white);
+  border: var(--ds-stroke-width-m) solid var(--ds-stroke-default);
+  border-radius: var(--ds-radius-m);
+  padding: var(--ds-space-m);
+  color: var(--ds-text-primary);
+}
+```
+
+## Names
+
+| Figma variable | CSS variable |
+|---|---|
+| Colors / Brand/500 | `--ds-color-brand-500` |
+| Tokens / Text/Primary | `--ds-text-primary` |
+| Tokens / Chart/Blue | `--ds-chart-blue` |
+| Size / Space/xs | `--ds-space-xs` |
+| Size / Radius/m | `--ds-radius-m` |
+| Size / Stroke/m | `--ds-stroke-width-m` (renamed so it can't clash with stroke colours) |
+| Size / Font Size/14 | `--ds-font-size-14` |
+| Typography / Weight/Medium | `--ds-font-weight-medium` (500) |
+| Context / Fill/Background | `--ds-context-fill-background` |
+| Appearance / Background | `--ds-appearance-background` |
+| Size [Button] / Horizontal Padding | `--ds-button-padding-x` |
+
+## Modes
+
+Figma collections with modes become HTML attributes. Set the attribute on an element and every variable in that collection switches for the element and its children, the same way a mode works on a Figma frame.
+
+| Collection | Attribute | Values | Default |
+|---|---|---|---|
+| Context | `data-context` | brand, neutral, positive, caution, negative, info, special | brand |
+| Appearance | `data-appearance` | fill, outlined, ghost | fill |
+| Size [Button] | `data-button-size` | 2xs, xs, s, m, l | m |
+| Size [Input] | `data-input-size` | s, m, l | m |
+| Size [Table] | `data-table-density` | default, compact | default |
+| Size [Badge] | `data-badge-size` | s, m | s |
+| Shape [Badge] | `data-badge-shape` | rounded, pill | rounded |
+
+```html
+<span class="badge" data-context="negative" data-appearance="outlined" data-badge-size="m">Rejected</span>
+```
+
+<Note title="Set context and appearance on the same element.">Appearance variables point at Context variables, and CSS resolves a variable where it is declared. The generated CSS covers a context change inside an appearance scope, but if two appearance scopes are nested, the later one in the stylesheet wins rather than the nearest one. Putting both attributes on the component root avoids the problem.</Note>
+
+Figma's own default is a collection's first mode. For Button and Input that's the smallest size, so the CSS defaults to m instead, the size the system uses for forms.
+
+## In TypeScript
+
+`tokens.ts` has the same data with resolved values, for code that can't read CSS variables, such as chart libraries drawing to canvas.
+
+```ts
+import { collection } from './tokens/tokens';
+
+const chartColours = collection('Tokens').tokens
+  .filter((t) => t.name.startsWith('Chart/'))
+  .map((t) => t.byMode['Mode 1'].value); // ['#0d7eb7', '#1b988a', ...]
+```
+
+## Updating
+
+1. Run `scripts/export-figma-variables.js` in the Figma file (through the Figma MCP server or as a development plugin) and replace `tokens/figma-variables.json` with its output.
+2. `npm run tokens`
+3. `npm run check:tokens`
+4. Review the diff of `tokens.css`, then commit.

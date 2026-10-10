@@ -1,0 +1,31 @@
+{
+  "name": "ds-admin-panel",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Code side of the DS-AdminPanel-2.0 Figma design system: design tokens as CSS variables, documented in Storybook.",
+  "scripts": {
+    "tokens": "node scripts/build-tokens.mjs",
+    "check:tokens": "node --experimental-strip-types scripts/check-tokens.mjs",
+    "storybook": "npm run tokens && storybook dev -p 6006",
+    "build-storybook": "npm run tokens && storybook build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "10.6.1",
+    "@storybook/addon-docs": "10.6.1",
+    "@storybook/react-vite": "10.6.1",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "@vitejs/plugin-react": "5.2.0",
+    "playwright-core": "1.56.0",
+    "remark-gfm": "4.0.1",
+    "storybook": "10.6.1",
+    "typescript": "5.9.3",
+    "vite": "7.3.7"
+  }
+}
