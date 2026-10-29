@@ -27,6 +27,16 @@ npm run typecheck
 | `src/foundations/` | Blocks that render the token pages. |
 | `src/docs/` | Storybook pages (MDX). |
 
+## Components (shadcn/ui)
+
+`src/components/ui/` holds shadcn/ui components (new-york-v4, copied from shadcn-ui/ui at commit 96da9cc, 27 Oct 2026):
+Button, Badge, Input, Label, Select, Table. They are unchanged except the `@/lib/utils` import. `src/styles/globals.css`
+points shadcn's variables (`--primary`, `--border`, `--ring`, ...) at the design tokens, so the components render in the
+design system's colours, radius and font. Variants and sizes are still shadcn's until each component is matched to Figma.
+
+`components.json` is set up for the shadcn CLI: `npx shadcn@latest add dialog` works on a machine that can reach ui.shadcn.com.
+Stories live in `src/stories/`; the Select "Keyboard" story is an interaction test.
+
 ## Using the tokens
 
 ```ts

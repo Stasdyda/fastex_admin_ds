@@ -1,0 +1,91 @@
+/*
+  Entry stylesheet for apps and Storybook.
+  1. Design tokens (generated from Figma) define every --ds-* variable.
+  2. The shadcn/ui variables below point at those tokens, so shadcn components
+     pick up the design system without edits. Change a token, not this file.
+  3. Tailwind's theme is narrowed to the token scales where they differ from
+     Tailwind defaults (radius, fonts, colours).
+*/
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "../tokens/tokens.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* shadcn/ui variables -> design tokens */
+:root {
+  --radius: var(--ds-radius-s);
+
+  --background: var(--ds-background-primary);
+  --foreground: var(--ds-text-primary);
+  --card: var(--ds-background-white);
+  --card-foreground: var(--ds-text-primary);
+  --popover: var(--ds-background-white);
+  --popover-foreground: var(--ds-text-primary);
+
+  --primary: var(--ds-background-brand);
+  --primary-foreground: var(--ds-text-inverse);
+  --secondary: var(--ds-background-secondary);
+  --secondary-foreground: var(--ds-text-primary);
+  --muted: var(--ds-background-secondary);
+  --muted-foreground: var(--ds-text-secondary);
+  --accent: var(--ds-background-secondary);
+  --accent-foreground: var(--ds-text-primary);
+  --destructive: var(--ds-background-negative);
+  --destructive-foreground: var(--ds-text-inverse);
+
+  --border: var(--ds-stroke-default);
+  --input: var(--ds-stroke-strong);
+  --ring: var(--ds-stroke-focus);
+
+  --chart-1: var(--ds-chart-blue);
+  --chart-2: var(--ds-chart-teal);
+  --chart-3: var(--ds-chart-violet);
+  --chart-4: var(--ds-chart-indigo);
+  --chart-5: var(--ds-chart-purple);
+}
+
+@theme inline {
+  --font-sans: var(--ds-font-family-default);
+  --font-mono: var(--ds-font-family-formula);
+
+  /* Radius utilities map to the token scale (4 / 8 / 12 / 16) instead of shadcn's multiples of --radius. */
+  --radius-sm: var(--ds-radius-xs);
+  --radius-md: var(--ds-radius-s);
+  --radius-lg: var(--ds-radius-m);
+  --radius-xl: var(--ds-radius-l);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background font-sans text-foreground;
+  }
+}
