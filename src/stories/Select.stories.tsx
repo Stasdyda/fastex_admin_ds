@@ -61,7 +61,8 @@ export const Keyboard: Story = {
     trigger.focus();
     await userEvent.keyboard('{Enter}');
     const listbox = await within(canvasElement.ownerDocument.body).findByRole('listbox');
-    await expect(listbox).toBeVisible();
+    // The menu fades in; wait for the open animation.
+    await waitFor(() => expect(listbox).toBeVisible());
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{Enter}');
     await waitFor(() => expect(trigger).toHaveTextContent('Tron (TRC-20)'));

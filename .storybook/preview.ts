@@ -4,6 +4,8 @@ import '../src/foundations/foundations.css';
 
 const preview: Preview = {
   parameters: {
+    // Accessibility violations fail `npm run test:stories`.
+    a11y: { test: 'error' },
     options: {
       storySort: {
         order: [

@@ -27,15 +27,29 @@ npm run typecheck
 | `src/foundations/` | Blocks that render the token pages. |
 | `src/docs/` | Storybook pages (MDX). |
 
-## Components (shadcn/ui)
+## Components
 
-`src/components/ui/` holds shadcn/ui components (new-york-v4, copied from shadcn-ui/ui at commit 96da9cc, 27 Oct 2026):
-Button, Badge, Input, Label, Select, Table. They are unchanged except the `@/lib/utils` import. `src/styles/globals.css`
-points shadcn's variables (`--primary`, `--border`, `--ring`, ...) at the design tokens, so the components render in the
-design system's colours, radius and font. Variants and sizes are still shadcn's until each component is matched to Figma.
+| Component | Status |
+|---|---|
+| Button | Matched to Figma (pilot). `src/components/ui/button.tsx` + `button.css`; Figma reference in `button.figma.ts`. |
+| Badge, Input, Label, Select, Table | Stock shadcn/ui (new-york-v4, shadcn-ui/ui commit 96da9cc), themed by tokens only. Not yet matched to Figma. |
+
+Rules for converting a component (Button is the reference):
+- Behaviour from shadcn/Radix (native elements, Slot, keyboard, focus, ARIA). Visuals from Figma, through tokens only.
+- Figma component properties become props; Figma variable modes become `data-*` attributes; interaction
+  states are real CSS states (`:hover`, `:active`, `:focus-visible`), never extra variants.
+- Stories: Playground (controls = Figma properties), Matrix, States (forced with storybook-addon-pseudo-states
+  for review), Content stress test, interaction tests. Accessibility (axe) runs on every story.
+
+Checks:
+
+```bash
+npm run test:stories   # every story's interaction test + accessibility check, in Chromium (Vitest)
+npm run build-storybook && npx http-server storybook-static -p 6007
+npm run check:button   # 682 computed-style comparisons with the Figma Button, using real hover/press/focus
+```
 
 `components.json` is set up for the shadcn CLI: `npx shadcn@latest add dialog` works on a machine that can reach ui.shadcn.com.
-Stories live in `src/stories/`; the Select "Keyboard" story is an interaction test.
 
 ## Using the tokens
 

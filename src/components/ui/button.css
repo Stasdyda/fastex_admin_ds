@@ -1,0 +1,236 @@
+/*
+  Button: visual layer for the Figma component "Button" (89:406).
+  Every value is a design token. The size tokens (--ds-button-*) switch with the
+  data-button-size attribute, the same way the Size [Button] mode switches in Figma.
+
+  Per-variant colours are held in local custom properties:
+    --_bg  background            --_fg  label colour          --_ic  icon colour
+    --_bd  border colour         --_bw  border width           --_ring focus ring colour
+    --_load loading gradient colour
+  Figma strokes are "inside", so borders and the focus ring are inset box-shadows:
+  they never change the button's size.
+
+  State order (later wins): rest -> hover -> focus-visible -> pressed (:active).
+  Disabled and loading buttons skip hover / focus / pressed colours.
+*/
+
+.ds-button {
+  --_bg: transparent;
+  --_fg: var(--ds-text-primary);
+  --_ic: var(--ds-icon-primary);
+  --_bd: transparent;
+  --_bw: 0px;
+  --_ring: var(--ds-stroke-focus);
+  --_load: var(--ds-icon-primary);
+
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-button-gap);
+  height: var(--ds-button-height);
+  padding: 0 var(--ds-button-padding-x);
+  margin: 0;
+  border: 0;
+  border-radius: var(--ds-button-radius);
+  background: var(--_bg);
+  box-shadow: inset 0 0 0 var(--_bw) var(--_bd);
+  color: var(--_fg);
+  font-family: var(--ds-font-family-default);
+  font-size: var(--ds-button-font-size);
+  line-height: var(--ds-button-line-height);
+  font-weight: var(--ds-button-font-weight);
+  letter-spacing: 0;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-button__icon {
+  display: inline-flex;
+  flex: none;
+  width: var(--ds-button-icon-size);
+  height: var(--ds-button-icon-size);
+  color: var(--_ic);
+}
+.ds-button__icon > svg {
+  width: 100%;
+  height: 100%;
+}
+.ds-button__label {
+  display: inline-block;
+}
+
+/* ---------- Primary ---------- */
+.ds-button[data-variant="primary"] {
+  --_bg: var(--ds-background-brand);
+  --_fg: var(--ds-text-inverse);
+  --_ic: var(--ds-icon-inverse);
+  --_ring: var(--ds-stroke-focus-strong);
+}
+.ds-button[data-variant="primary"]:hover:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_bg: var(--ds-background-brand-hover);
+}
+.ds-button[data-variant="primary"]:focus-visible:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_bg: var(--ds-background-brand-hover);
+  --_bd: var(--_ring);
+  --_bw: var(--ds-stroke-width-l);
+}
+.ds-button[data-variant="primary"]:active:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_bg: var(--ds-background-brand-pressed);
+}
+
+/* ---------- Secondary ---------- */
+.ds-button[data-variant="secondary"] {
+  --_bg: var(--ds-background-white);
+  --_bd: var(--ds-stroke-default);
+  --_bw: var(--ds-stroke-width-m);
+  --_fg: var(--ds-text-primary);
+  --_ic: var(--ds-icon-primary);
+}
+.ds-button[data-variant="secondary"]:hover:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_bd: var(--ds-stroke-brand-hover);
+  --_fg: var(--ds-text-brand-hover);
+  --_ic: var(--ds-icon-brand-hover);
+}
+.ds-button[data-variant="secondary"]:focus-visible:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_bd: var(--_ring);
+  --_bw: var(--ds-stroke-width-l);
+  --_fg: var(--ds-text-brand-hover);
+  --_ic: var(--ds-icon-brand-hover);
+}
+.ds-button[data-variant="secondary"]:active:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_bd: var(--ds-stroke-brand-pressed);
+  --_bw: var(--ds-stroke-width-m);
+  --_fg: var(--ds-text-brand-pressed);
+  --_ic: var(--ds-icon-brand-pressed);
+}
+
+/* ---------- Ghost ---------- */
+.ds-button[data-variant="ghost"] {
+  --_fg: var(--ds-text-primary);
+  --_ic: var(--ds-icon-primary);
+}
+.ds-button[data-variant="ghost"]:hover:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_bg: var(--ds-background-tertiary);
+}
+.ds-button[data-variant="ghost"]:focus-visible:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_bg: var(--ds-background-secondary);
+  --_bd: var(--_ring);
+  --_bw: var(--ds-stroke-width-l);
+}
+/* Figma: Ghost Pressed uses the same fill as Ghost Hover. */
+.ds-button[data-variant="ghost"]:active:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_bg: var(--ds-background-tertiary);
+  --_bd: transparent;
+  --_bw: 0px;
+}
+
+/* ---------- Danger (Figma State=Danger; hover / pressed / focus are derived, see button.figma.ts) ---------- */
+.ds-button[data-variant="primary"][data-danger] {
+  --_bg: var(--ds-background-negative);
+}
+.ds-button[data-variant="primary"][data-danger]:hover:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_bg: var(--ds-background-negative-hover);
+}
+.ds-button[data-variant="primary"][data-danger]:focus-visible:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_bg: var(--ds-background-negative-hover);
+}
+.ds-button[data-variant="primary"][data-danger]:active:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_bg: var(--ds-background-negative-pressed);
+}
+
+.ds-button[data-variant="secondary"][data-danger] {
+  --_bd: var(--ds-stroke-negative);
+  --_fg: var(--ds-text-negative);
+  --_ic: var(--ds-icon-negative);
+  --_load: var(--ds-icon-negative);
+}
+.ds-button[data-variant="secondary"][data-danger]:hover:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_bd: var(--ds-stroke-negative-hover);
+  --_fg: var(--ds-text-negative-hover);
+  --_ic: var(--ds-icon-negative-hover);
+}
+.ds-button[data-variant="secondary"][data-danger]:focus-visible:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_bd: var(--_ring);
+  --_fg: var(--ds-text-negative-hover);
+  --_ic: var(--ds-icon-negative-hover);
+}
+.ds-button[data-variant="secondary"][data-danger]:active:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_bd: var(--ds-stroke-negative-pressed);
+  --_fg: var(--ds-text-negative-pressed);
+  --_ic: var(--ds-icon-negative-pressed);
+}
+
+.ds-button[data-variant="ghost"][data-danger] {
+  --_fg: var(--ds-text-negative);
+  --_ic: var(--ds-icon-negative);
+  --_load: var(--ds-icon-negative);
+}
+.ds-button[data-variant="ghost"][data-danger]:hover:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_fg: var(--ds-text-negative-hover);
+  --_ic: var(--ds-icon-negative-hover);
+}
+.ds-button[data-variant="ghost"][data-danger]:active:not(:disabled, [aria-disabled="true"], [data-loading]) {
+  --_fg: var(--ds-text-negative-pressed);
+  --_ic: var(--ds-icon-negative-pressed);
+}
+
+/* ---------- Disabled (Figma State=Disabled) ---------- */
+.ds-button[data-variant]:is(:disabled, [aria-disabled="true"]) {
+  --_fg: var(--ds-text-disabled);
+  --_ic: var(--ds-icon-disabled);
+  cursor: not-allowed;
+}
+.ds-button:is([data-variant="primary"], [data-variant="secondary"]):is(:disabled, [aria-disabled="true"]) {
+  --_bg: var(--ds-background-disabled);
+  --_bd: var(--ds-stroke-disabled);
+  --_bw: var(--ds-stroke-width-m);
+}
+.ds-button[data-variant="ghost"]:is(:disabled, [aria-disabled="true"]) {
+  --_bg: transparent;
+  --_bw: 0px;
+}
+
+/* ---------- Loading (Figma State=Loading) ---------- */
+.ds-button[data-loading] {
+  cursor: default;
+}
+.ds-button[data-variant="primary"][data-loading] {
+  --_ic: var(--ds-icon-secondary-inverse);
+  --_load: var(--ds-icon-inverse);
+}
+/* Loading buttons stay focusable, so keyboard focus still shows the ring. */
+.ds-button[data-variant][data-loading]:focus-visible {
+  --_bd: var(--_ring);
+  --_bw: var(--ds-stroke-width-l);
+}
+/* Figma draws a static gradient on the label: opaque, transparent at 62%, opaque. */
+.ds-button[data-loading] .ds-button__label {
+  color: transparent;
+  background-image: linear-gradient(90deg, var(--_load) 0%, transparent 62%, var(--_load) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+/* In code the gap moves across the label. Duration has no Figma token yet (see the Button audit). */
+@media (prefers-reduced-motion: no-preference) {
+  .ds-button[data-loading] .ds-button__label {
+    background-image: linear-gradient(90deg, var(--_load) 0%, var(--_load) 30%, transparent 50%, var(--_load) 70%, var(--_load) 100%);
+    background-size: 200% 100%;
+    animation: ds-button-loading var(--ds-button-loading-duration, 1.4s) linear infinite;
+  }
+}
+@keyframes ds-button-loading {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+
+/* Windows high-contrast mode drops box-shadows; keep a visible focus indicator. */
+@media (forced-colors: active) {
+  .ds-button { border: 1px solid ButtonText; }
+  .ds-button:focus-visible { outline: 2px solid Highlight; outline-offset: 2px; }
+}
